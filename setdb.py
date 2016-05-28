@@ -34,6 +34,7 @@ class MyListWidget(QtGui.QListWidget):
 class Ui_Dialog(object):
     def __init__(self):
         self.db = None
+        self.cursor = None
 
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
@@ -156,10 +157,8 @@ class Ui_Dialog(object):
             print 'init self.db'
             #username/Password@127.0.0.1:1521/dsn
             dsn=oracle.makedsn(self.lineEdit_Ip.text(),self.lineEditPort.text(),self.lineEditDatabase.text())
-            #print type('%s'%self.lineEditUserName.text())
-            #print '%s'%self.lineEditUserName.text()
             db=oracle.connect('%s'%self.lineEditUserName.text(),'%s'%self.lineEditPassword.text(),dsn)
-            cursor=db.cursor()
+            self.cursor=db.cursor()
 
 
             self.listWidgetTables.pressed.connect(self.showFeilds) 
