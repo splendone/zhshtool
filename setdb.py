@@ -156,7 +156,9 @@ class Ui_Dialog(object):
             print 'init self.db'
             #username/Password@127.0.0.1:1521/dsn
             dsn=oracle.makedsn(self.lineEdit_Ip.text(),self.lineEditPort.text(),self.lineEditDatabase.text())
-            db=oracle.connect(self.lineEditUserName.text(),self.lineEditPassword.text(),dsn)
+            #print type('%s'%self.lineEditUserName.text())
+            #print '%s'%self.lineEditUserName.text()
+            db=oracle.connect('%s'%self.lineEditUserName.text(),'%s'%self.lineEditPassword.text(),dsn)
             cursor=db.cursor()
 
 
