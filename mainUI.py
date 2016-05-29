@@ -33,6 +33,7 @@ class Ui_MainWindow(object):
     def __init__(self):
         self.db = None
         self.cursor = None
+        self.data = None
         
         
     def setupUi(self, MainWindow):
@@ -109,6 +110,9 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.setdb)
         self.setItem = QtGui.QAction(QtCore.QString("SetItem"),self.toolBar) 
         self.toolBar.addAction(self.setItem)
+        self.saveCsv = QtGui.QAction(QtCore.QString("SaveCSV"),self.toolBar) 
+        self.saveCsv.setEnabled(False)
+        self.toolBar.addAction(self.saveCsv)
         self.toolBar.setObjectName(_fromUtf8("toolBar"))
         MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
 
@@ -116,14 +120,28 @@ class Ui_MainWindow(object):
         self.tabWidget.setCurrentIndex(0)
         QtCore.QObject.connect(self.setdb, QtCore.SIGNAL(_fromUtf8("triggered ()")), self.showDlgSetdb)
         QtCore.QObject.connect(self.setItem, QtCore.SIGNAL(_fromUtf8("triggered ()")), self.showDlgSetItem)
+        QtCore.QObject.connect(self.saveCsv, QtCore.SIGNAL(_fromUtf8("triggered ()")), self.saveFileCsv)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("pressed ()")), self.searchByItem)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
+    def saveFileCsv(self):
+        pass
+        # dlg=QFileDialog()
+        # dlg.setacceptMode(QFileDialog.AcceptSave)
+        # dlg.setFileMode(QFileDialog.AnyFile) 
+        # dlg.setFilter("Text files (*.txt)") 
+        # filenames=QStringList() 
+        # if dlg.exec_(): 
+        #     filenames=dlg.selectedFiles() 
+        #     f = open(filenames[0], 'r') 
+        #     with f: 
+        #         data = f.read() 
+        #         self.contents.setText(data)
+
     def searchByItem(self):
         if not self.cursor:
             self.showDlgSetdb()
         params = {}
-        #params['itemCode'], params['from'], params['to'], params['mount']
         params['itemCode'] = str(self.comboBox_item.itemText(self.comboBox_item.currentIndex()))
         params['from'] = str(self.calendarWidget_from.selectedDate().toString('yyyy-MM-dd'))
         params['to'] = str(self.calendarWidget_to.selectedDate().toString('yyyy-MM-dd'))
@@ -132,17 +150,17 @@ class Ui_MainWindow(object):
         sql = sqlByItem(params)
         print sql
         r= self.cursor.execute(sql)
-        data = r.fetchall()
-        length=len(data)
+        self.data = r.fetchall()
+        length = len(self.data)
         self.tableWidget.setRowCount(length)
         for i in range(0, length-1):
-            itemi=data[i]
+            itemi = self.data[i]
             self.tableWidget.setItem(i, 0, QtGui.QTableWidgetItem(itemi[0]))
             self.tableWidget.setItem(i, 1, QtGui.QTableWidgetItem(itemi[1]))
             self.tableWidget.setItem(i, 2, QtGui.QTableWidgetItem(itemi[2]))
             self.tableWidget.setItem(i, 3, QtGui.QTableWidgetItem(itemi[3]))
-        
-        # self.tableWidget.setItem(0, 3, QtGui.QTableWidgetItem('itemi[3]'))
+        if length > 0:
+            self.saveCsv.setEnabled(True)
         
     
     
