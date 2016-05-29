@@ -10,6 +10,7 @@ from PyQt4 import QtCore, QtGui
 from dialogSetdbUI import Ui_Dialog as Ui_Dialog_Setdb
 from dialogSetItemUI import Ui_Dialog as Ui_Dialog_SetItem
 from sqlsFormate import sqlByItem
+import json
 
 DB = None
 CURSOR = None
@@ -67,8 +68,12 @@ class Ui_MainWindow(object):
         self.formLayout.setWidget(2, QtGui.QFormLayout.LabelRole, self.label_item)
         self.comboBox_item = QtGui.QComboBox(self.formLayoutWidget)
         self.comboBox_item.setObjectName(_fromUtf8("comboBox_item"))
-        self.comboBox_item.addItem(_fromUtf8("120400001"))
-        self.comboBox_item.addItem(_fromUtf8("120400002"))
+        self.setItemCode()
+        # self.comboBox_item.addItem(_fromUtf8("120400001"))
+        # self.comboBox_item.addItem(_fromUtf8("120400001A"))
+        # self.comboBox_item.addItem(_fromUtf8("120400002"))
+        # self.comboBox_item.addItem(_fromUtf8("120400002A"))
+        # self.comboBox_item.addItem(_fromUtf8("120400002B"))
         self.formLayout.setWidget(2, QtGui.QFormLayout.FieldRole, self.comboBox_item)
         self.label_mount = QtGui.QLabel(self.formLayoutWidget)
         self.label_mount.setObjectName(_fromUtf8("label_mount"))
@@ -123,6 +128,16 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.saveCsv, QtCore.SIGNAL(_fromUtf8("triggered ()")), self.saveFileCsv)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL(_fromUtf8("pressed ()")), self.searchByItem)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        
+        
+    def setItemCode(self):
+        with open('itemcode.json') as data_file:    
+            data = json.load(data_file)
+            print type(data)
+            for k in range(len(data)):
+                print data[k]
+                self.comboBox_item.addItem(_fromUtf8(data[k]))
+        
         
     def saveFileCsv(self):
         pass

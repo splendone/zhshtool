@@ -88,7 +88,7 @@ class Ui_Dialog(object):
         if not self.ui_main.db:
             dsn = oracle.makedsn(self.lineEdit_ip.text(),self.lineEdit_port.text(),self.lineEdit_database.text())
             self.ui_main.db = oracle.connect('%s'%self.lineEdit_username.text(),'%s'%self.lineEdit_password.text(),dsn)
-            self.ui_main.cursor = self.ui_maindb.cursor()
+            self.ui_main.cursor = self.ui_main.db.cursor()
         
         self.dlg.accept()
 
