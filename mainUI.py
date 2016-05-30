@@ -175,7 +175,7 @@ class Ui_MainWindow(object):
             self.saveCsv.setEnabled(True)
             
             
-        fillTable(self.tabWidget, self.data)
+        fillTable(self.tableWidget, self.data)
         
         
         # for i in range(0, length-1):
