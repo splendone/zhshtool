@@ -10,6 +10,7 @@ from PyQt4 import QtCore, QtGui
 from dialogSetdbUI import Ui_Dialog as Ui_Dialog_Setdb
 from dialogSetItemUI import Ui_Dialog as Ui_Dialog_SetItem
 from sqlsFormate import sqlByItem
+from optResultFields import fillTable
 import json
 
 DB = None
@@ -166,16 +167,26 @@ class Ui_MainWindow(object):
         print sql
         r= self.cursor.execute(sql)
         self.data = r.fetchall()
+        
+        
         length = len(self.data)
         self.tableWidget.setRowCount(length)
-        for i in range(0, length-1):
-            itemi = self.data[i]
-            self.tableWidget.setItem(i, 0, QtGui.QTableWidgetItem(itemi[0]))
-            self.tableWidget.setItem(i, 1, QtGui.QTableWidgetItem(itemi[1]))
-            self.tableWidget.setItem(i, 2, QtGui.QTableWidgetItem(itemi[2]))
-            self.tableWidget.setItem(i, 3, QtGui.QTableWidgetItem(itemi[3]))
         if length > 0:
             self.saveCsv.setEnabled(True)
+            
+            
+        fillTable(self.tabWidget, self.data)
+        
+        
+        # for i in range(0, length-1):
+        #     itemi = self.data[i]
+        #     print itemi
+            
+        #     self.tableWidget.setItem(i, 0, QtGui.QTableWidgetItem(itemi[0]))
+        #     self.tableWidget.setItem(i, 1, QtGui.QTableWidgetItem(str(itemi[1])))
+        #     self.tableWidget.setItem(i, 2, QtGui.QTableWidgetItem(str(itemi[2])))
+        #     self.tableWidget.setItem(i, 3, QtGui.QTableWidgetItem(itemi[3]).strftime("%Y-%m-%d"))
+        
         
     
     
