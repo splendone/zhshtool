@@ -2,6 +2,15 @@
 from PyQt4 import  QtGui
 import json
 
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
+
+
 def setTableFieldsByItem(params):
     with open('fields.json') as data_file:    
         data = json.load(data_file)
