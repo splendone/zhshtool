@@ -10,7 +10,7 @@ from PyQt4 import QtCore, QtGui
 from dialogSetdbUI import Ui_Dialog as Ui_Dialog_Setdb
 from dialogSetItemUI import Ui_Dialog as Ui_Dialog_SetItem
 from sqlsFormate import sqlByItem
-from optResultFields import fillTable, setTableFieldsByItem
+from optResultFields import fillTable#, setTableFieldsByItem
 
 
 import json
@@ -102,16 +102,18 @@ class Ui_MainWindow(object):
         self.tableWidget = QtGui.QTableWidget(self.centralwidget)
         self.tableWidget.setGeometry(QtCore.QRect(340, 30, 540, 490))
         self.tableWidget.setObjectName(_fromUtf8("tableWidget"))
-        self.tableWidget.setColumnCount(4)
+        
+        setTableFieldsByItem()
+        # self.tableWidget.setColumnCount(4)
         self.tableWidget.setRowCount(0)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, item)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(1, item)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(2, item)
-        item = QtGui.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(3, item)
+        # item = QtGui.QTableWidgetItem()
+        # self.tableWidget.setHorizontalHeaderItem(0, item)
+        # item = QtGui.QTableWidgetItem()
+        # self.tableWidget.setHorizontalHeaderItem(1, item)
+        # item = QtGui.QTableWidgetItem()
+        # self.tableWidget.setHorizontalHeaderItem(2, item)
+        # item = QtGui.QTableWidgetItem()
+        # self.tableWidget.setHorizontalHeaderItem(3, item)
         MainWindow.setCentralWidget(self.centralwidget)
         self.toolBar = QtGui.QToolBar(MainWindow)
         self.setdb = QtGui.QAction(QtCore.QString("SetDB"),self.toolBar) 
@@ -150,7 +152,7 @@ class Ui_MainWindow(object):
                     whatever += itemi[j]+','
                 whatever = whatever[:-1] + '\n'
             file_.write(whatever)
-            file_.close()
+            # file_.close()
                     
         pass
         # dlg=QFileDialog()
@@ -215,7 +217,17 @@ class Ui_MainWindow(object):
         ui = Ui_Dialog_SetItem()
         ui.setupUi(Dialog)
         Dialog.exec_()
-
+        
+    def setTableFieldsByItem(self):
+        with open('fields.json') as data_file:    
+            data = json.load(data_file)
+            print type(data)
+            self.tableWidget.setColumnCount(len(data['sql1']))
+            for k in range(len(data['sql1'])):
+                item = QtGui.QTableWidgetItem()
+                self.tableWidget.setHorizontalHeaderItem(k, item)
+                self.tableWidget.horizontalHeaderItem(k).setText(_translate("MainWindow", data['sql1'][k], None))
+                
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.label_from.setText(_translate("MainWindow", "From", None))
@@ -228,7 +240,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_items), _translate("MainWindow", "Items", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_others), _translate("MainWindow", "Others", None))
         
-        setTableFieldsByItem(self.tableWidget)
+        # setTableFieldsByItem()
         
         # item = self.tableWidget.horizontalHeaderItem(0)
         # item.setText(_translate("MainWindow", "patient_id", None))
