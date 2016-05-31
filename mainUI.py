@@ -103,7 +103,7 @@ class Ui_MainWindow(object):
         self.tableWidget.setGeometry(QtCore.QRect(340, 30, 540, 490))
         self.tableWidget.setObjectName(_fromUtf8("tableWidget"))
         
-        setTableFieldsByItem()
+        self.setTableFieldsByItem()
         # self.tableWidget.setColumnCount(4)
         self.tableWidget.setRowCount(0)
         # item = QtGui.QTableWidgetItem()
