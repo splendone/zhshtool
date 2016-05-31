@@ -1,0 +1,2 @@
+{"sql1":["patient_id", "visit_id", "mount", "bdt", "item_name", "costs", "dept_name", "doctor_in_charge"], 
+"sql2":["patient_id", "visit_id", "item_name", "costs", "total_costs", "billing_date_time", "dept_name", "doctor_in_charge"]}

@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "mainUI.py", line 244, in <module>
-  File "mainUI.py", line 72, in setupUi
-  File "mainUI.py", line 135, in setItemCode
-IOError: [Errno 2] No such file or directory: 'itemcode.json'
