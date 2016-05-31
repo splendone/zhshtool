@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from PyQt4 import  QtGui
+import json
 
 def setTableFieldsByItem(params):
     with open('fields.json') as data_file:    
