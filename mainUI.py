@@ -10,7 +10,9 @@ from PyQt4 import QtCore, QtGui
 from dialogSetdbUI import Ui_Dialog as Ui_Dialog_Setdb
 from dialogSetItemUI import Ui_Dialog as Ui_Dialog_SetItem
 from sqlsFormate import sqlByItem
-from optResultFields import fillTable
+from optResultFields import fillTable, setTableFieldsByItem
+
+
 import json
 
 DB = None
@@ -134,13 +136,22 @@ class Ui_MainWindow(object):
     def setItemCode(self):
         with open('itemcode.json') as data_file:    
             data = json.load(data_file)
-            print type(data)
             for k in range(len(data)):
-                print data[k]
                 self.comboBox_item.addItem(_fromUtf8(data[k]))
         
         
     def saveFileCsv(self):
+        with open('results.csv', 'w') as file_:
+            whatever = ''
+            length = len(self.data)
+            for i in range(0, length-1):
+                itemi = self.data[i]
+                for j in range(0, len(itemi)-1):
+                    whatever += itemi[j]+','
+                whatever = whatever[:-1] + '\n'
+            file_.write(whatever)
+            file_.close()
+                    
         pass
         # dlg=QFileDialog()
         # dlg.setacceptMode(QFileDialog.AcceptSave)
@@ -216,14 +227,20 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Search", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_items), _translate("MainWindow", "Items", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_others), _translate("MainWindow", "Others", None))
-        item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "patient_id", None))
-        item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "visit_id", None))
-        item = self.tableWidget.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "mount", None))
-        item = self.tableWidget.horizontalHeaderItem(3)
-        item.setText(_translate("MainWindow", "billing_date_time", None))
+        
+        setTableFieldsByItem(self.tableWidget)
+        
+        # item = self.tableWidget.horizontalHeaderItem(0)
+        # item.setText(_translate("MainWindow", "patient_id", None))
+        # item = self.tableWidget.horizontalHeaderItem(1)
+        # item.setText(_translate("MainWindow", "visit_id", None))
+        # item = self.tableWidget.horizontalHeaderItem(2)
+        # item.setText(_translate("MainWindow", "mount", None))
+        # item = self.tableWidget.horizontalHeaderItem(3)
+        # item.setText(_translate("MainWindow", "billing_date_time", None))
+        
+        
+        
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar", None))
     
 
