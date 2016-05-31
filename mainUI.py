@@ -236,14 +236,14 @@ class MyWindow(QtGui.QMainWindow):
             DB.close()
         print 'close db/cursor ...'
     
-if __name__ == "__main__":
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    MainWindow = MyWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+# if __name__ == "__main__":
+#     import sys
+#     app = QtGui.QApplication(sys.argv)
+#     MainWindow = MyWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
     
-    sys.exit(app.exec_())
+#     sys.exit(app.exec_())
     # ui.closeDBConnect()
 
